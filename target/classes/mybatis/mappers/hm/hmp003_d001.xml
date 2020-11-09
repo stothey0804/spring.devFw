@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- model.modelConfig에 namespace 설정 -->
+<mapper namespace="hm.hmp003_d001">
+<!-- 	Hmp003_d001VO 객체를 result Map으로 지정  -->
+	<resultMap id="hmp003_d001Result01" type="hmp003_d001VO">
+		<result property="prod_id" column="prod_id"  />
+		<result property="prod_name" column="prod_name" />
+		<result property="prod_desc" column="prod_desc" />
+		<result property="vend_name" column="vend_name" />
+		<result property="prod_price" column="prod_price" />
+	</resultMap>
+
+	<!-- 	조회 쿼리 -->
+	<select id="searchList" resultMap="hmp003_d001Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select prod_id, prod_name, prod_desc, vend_name, prod_price
+         from   products P inner join vendors V on P.vend_id = V.vend_id
+      ]]>
+		<where>
+			<if test=" p_prod_id != ''  and  p_prod_id != null">
+				prod_id like #{p_prod_id}
+			</if>
+			</where>
+	</select>
+</mapper>
